@@ -1,0 +1,1402 @@
+{
+  "name": "Electiva II - Balanceador de Tickets con ML",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1ntmdOg0yKSNDMC-Uf14y7BIsgLA205-J",
+            "mode": "list",
+            "cachedResultName": "HOJAS DE VIDA N8N",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1ntmdOg0yKSNDMC-Uf14y7BIsgLA205-J"
+          }
+        },
+        "options": {
+          "fields": [
+            "*"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        80
+      ],
+      "id": "992511d0-d3e5-4382-ae23-ec82a6c86cf5",
+      "name": "Search files and folders",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OgvlD5tBQhodxhVX",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1UU_q9RIN0nKefO3rquf0ewb9Z8YK4UHavbsohagzKyw",
+          "mode": "list",
+          "cachedResultName": "TICKETS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UU_q9RIN0nKefO3rquf0ewb9Z8YK4UHavbsohagzKyw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Respuestas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UU_q9RIN0nKefO3rquf0ewb9Z8YK4UHavbsohagzKyw/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        0
+      ],
+      "id": "ea38f669-de26-4a0e-be8d-52d1a95008e5",
+      "name": "Google Sheets Tickets",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "qL2N6bTV7eMMjdVA",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "92e50835-7759-47c0-9d2e-ae106aaa47fa",
+              "name": "Marca Temporal",
+              "value": "={{ $json[\"Marca temporal\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "6738ae04-a2eb-47a9-ad29-e1650d5c89d6",
+              "name": "Subject",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "141f7687-6161-4311-af29-99f5584703cc",
+              "name": "Primary Contact",
+              "value": "={{ $json[\"Primary Contact (Email)\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "863d3da1-0d67-4b74-8edf-f65783dd9ccf",
+              "name": "Region Impacted",
+              "value": "={{ $json[\"Region Impacted\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "de6ca27d-6843-4f6e-84ad-09166d6510d5",
+              "name": "Category",
+              "value": "={{ $json.Category }}",
+              "type": "string"
+            },
+            {
+              "id": "e1f6d54a-f77f-4cc5-a1ba-eb123ce9c977",
+              "name": "Impact Area",
+              "value": "={{ $json[\"Impact Area\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "e4ba3849-5130-4bd5-a7eb-40d29a0d963b",
+              "name": "Priority",
+              "value": "={{ $json.Priority }}",
+              "type": "string"
+            },
+            {
+              "id": "e81760bb-d151-497f-8cfe-2d7b16cf8930",
+              "name": "Technical Complexity",
+              "value": "={{ $json[\"Technical Complexity\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "19db6894-e8ad-448b-8b77-b4e3d027b3ea",
+              "name": "Idea / Issue Description",
+              "value": "={{ $json[\"Idea / Issue Description\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "7968170d-cbca-4663-a45c-d914eb585231",
+              "name": "Proposed Solution",
+              "value": "={{ $json[\"Proposed Solution\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "1bd8892a-1cf7-45a7-9d8b-7ecf7550bcaa",
+              "name": "Val",
+              "value": "={{ $json.Val }}",
+              "type": "string"
+            },
+            {
+              "id": "06da2715-4290-4fd7-9bc9-372c6dadc5a1",
+              "name": "ID",
+              "value": "={{ $json.ID }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        0
+      ],
+      "id": "ad648316-d27f-44cd-86cf-0ee284e85239",
+      "name": "Fields Tickets"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  CASE \n    WHEN EXISTS (\n      SELECT 1\n      FROM \"db_Tickets\"\n      WHERE \"Subject\" = '{{ $('Fields Tickets').item.json.Subject }}'\n        AND \"Primary Contact (Email)\" = '{{ $('Fields Tickets').item.json[\"Primary Contact\"] }}'\n        AND \"Idea / Issue Description\" = '{{ $('Fields Tickets').item.json[\"Idea / Issue Description\"] }}'\n    ) THEN 1\n    ELSE 0\n  END AS existe;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        576,
+        0
+      ],
+      "id": "733a2d37-a882-4585-9820-9235526fac7e",
+      "name": "Check duplicate",
+      "credentials": {
+        "postgres": {
+          "id": "Z93Pmku0N5KIrhtR",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.existe }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              },
+              "id": "f4ec0748-acfb-422f-aeed-1b0b8db3bfe5"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "85e1d10e-c4a5-4df1-90c3-65563859452a",
+      "name": "Condition Duplicate"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "subject": "Ticket Rechazado - Duplicado",
+        "message": "Tu ticket fue rechazado porque ya se ingreso anteriormente en el formulario, Por favor contacta con el administrador..",
+        "toList": [
+          "={{ $('Fields Tickets').item.json[\"Primary Contact\"] }}"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        -112
+      ],
+      "id": "4943afb7-45e3-4fc7-a7bc-16db62648ecb",
+      "name": "Duplicate Rejected Mail",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "4talzliYihf5KW84",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": "public",
+        "table": {
+          "__rl": true,
+          "value": "db_Tickets",
+          "mode": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Marca temporal": "={{ $('Fields Tickets').item.json[\"Marca Temporal\"] }}",
+            "Subject": "={{ $('Fields Tickets').item.json.Subject }}",
+            "Primary Contact (Email)": "={{ $('Fields Tickets').item.json[\"Primary Contact\"] }}",
+            "Region Impacted": "={{ $('Fields Tickets').item.json[\"Region Impacted\"] }}",
+            "Category": "={{ $('Fields Tickets').item.json.Category }}",
+            "Impact Area": "={{ $('Fields Tickets').item.json[\"Impact Area\"] }}",
+            "Priority": "={{ $('Fields Tickets').item.json.Priority }}",
+            "Technical Complexity": "={{ $('Fields Tickets').item.json[\"Technical Complexity\"] }}",
+            "Idea / Issue Description": "={{ $('Fields Tickets').item.json[\"Idea / Issue Description\"] }}",
+            "Proposed Solution": "={{ $('Fields Tickets').item.json[\"Proposed Solution\"] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Marca temporal",
+              "displayName": "Marca temporal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Primary Contact (Email)",
+              "displayName": "Primary Contact (Email)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Region Impacted",
+              "displayName": "Region Impacted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Impact Area",
+              "displayName": "Impact Area",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Technical Complexity",
+              "displayName": "Technical Complexity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Idea / Issue Description",
+              "displayName": "Idea / Issue Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Proposed Solution",
+              "displayName": "Proposed Solution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Developer",
+              "displayName": "Developer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        80
+      ],
+      "id": "2001c9b1-09f1-4d83-89db-b991f3ae398d",
+      "name": "Insertar Ticket In DB",
+      "credentials": {
+        "postgres": {
+          "id": "Z93Pmku0N5KIrhtR",
+          "name": "Postgres account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'db_tickets';"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1456,
+        80
+      ],
+      "id": "de486c5c-4bef-459f-9b65-d5bc0aa16802",
+      "name": "Download CV",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OgvlD5tBQhodxhVX",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4375c2f9-5e23-480a-8e02-eaf9aec819ef",
+              "leftValue": "={{ $json.mimeType }}",
+              "rightValue": "application/pdf",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1664,
+        80
+      ],
+      "id": "9e2e9c02-6d4e-4b52-96e5-999923750b8d",
+      "name": "Filter Only PDF"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/files",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "purpose",
+              "value": "ocr"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1872,
+        80
+      ],
+      "id": "6daed165-0308-4036-b322-555a5d6ed2c4",
+      "name": "HTTP POST Mistral",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IaW5Sl01Tpxv86x3",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.mistral.ai/v1/files/{{ $json.id }}/url",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "expiry",
+              "value": "24"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2080,
+        80
+      ],
+      "id": "ec5bb016-f7a4-4240-878b-ad07deb42566",
+      "name": "HTTP GET MISTRAL",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IaW5Sl01Tpxv86x3",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/ocr",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\":\"mistral-ocr-latest\",\n  \"document\":{\n    \"type\":\"document_url\",\n    \"document_url\":\"{{ $json.url }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2288,
+        80
+      ],
+      "id": "1d4213d5-2c9d-4aed-9632-f944fdcab9e5",
+      "name": "HTTP OCR Mistral",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IaW5Sl01Tpxv86x3",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Trae todos los items que entran al nodo\nconst items = $input.all();\n\nconst output = {};\n\nitems.forEach((item, index) => {\n  const markdown = item.json.pages[0].markdown;\n\n  // Segmentamos el texto en secciones\n  function parseMarkdown(md) {\n    const sections = {};\n    let currentHeader = null; // antes estaba en \"General\"\n    const lines = md.split(/\\r?\\n/);\n\n    for (let line of lines) {\n      line = line.trim();\n\n      if (line.startsWith(\"##\")) {\n        currentHeader = line.replace(/^#+\\s*/, \"\").trim();\n        sections[currentHeader] = \"\";\n      } else if (line.startsWith(\"#\")) {\n        // Esto es el nombre\n        sections[\"Nombre\"] = line.replace(/^#+\\s*/, \"\").trim();\n      } else if (/Identidad:/i.test(line)) {\n        sections[\"Identidad\"] = line.replace(/Identidad:\\s*/i, \"\").trim();\n      } else if (/Perfil:/i.test(line)) {\n        sections[\"Perfil\"] = line.replace(/Perfil:\\s*/i, \"\").trim();\n      } else if (currentHeader) {\n        // Solo guarda contenido si hay un header definido\n        sections[currentHeader] += line + \" \";\n      }\n    }\n    return sections;\n  }\n\n  // Procesamos cada documento\n  const info = parseMarkdown(markdown);\n\n  // Guardamos bajo \"Desarrollador X\"\n  output[`Desarrollador ${index + 1}`] = info;\n});\n\n// Devolvemos un solo objeto\nreturn [\n  {\n    json: output\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2496,
+        80
+      ],
+      "id": "aad3dcc9-6a70-4934-b0b4-38ddcad293c4",
+      "name": "Code JS CV format"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-5-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an assistant that assigns IT tickets to developers. \nReturn only a JSON object with the following fields:\n- developer_name: (string)\n- Identity: (string)\n- estimated_hours: (integer, only the number of hours)\n- weeks_duration: (integer, only the number of weeks)\n- completion_date: (date in YYYY-MM-DD format)\n- Percentage: (integer from 0 to 100 representing the similarity score)\n\nRules:\n- Do not add explanations or extra text, only the JSON.\n- Evaluate the match between the ticket description and each developer profile based on:\n  * Technical Skills\n  * Professional Profile\n  * Work Experience\n  * Languages\n\n- Calculate a similarity percentage (0–100%) for each developer using the context of the ticket.\n  Include the selected developer’s percentage in the JSON field \"Percentage\".\n\n- If no developer reaches at least 95% similarity, assign the ticket to a **generic category called “Otros” with the following structure:\n\n  {\n    \"developer_name\": \"Otros\",\n    \"Identity\": \"00000\",\n    \"estimated_hours\": 0,\n    \"weeks_duration\": 0,\n    \"completion_date\": \"\",\n    \"Percentage\": (integer from 0 to 100 representing the similarity score)\n  }\n\n- If one or more developers have > 95% similarity, choose the one with the highest percentage.\n\nEffort Estimation Model\n\n1. **Base Hours by Priority:**\n   - Low priority → 8 hours  \n   - Medium priority → 24 hours  \n   - High priority → 48 hours  \n\n2. **Complexity Multipliers:**\n   - Low complexity → ×1.0  \n   - Medium complexity → ×1.25  \n   - High complexity → ×1.5  \n\n3. **Formula:**\n   Estimated Hours = Base Hours (by Priority) × Complexity Multiplier  \n\n   Example:  \n   Priority: Medium  \n   Complexity: High  \n   → Estimated Hours = 24 × 1.5 = 36 hours\n- Week's duration must be calculated assuming a 40-hour workweek.\n- Completion_date must consider the current date is {{ $now.format(\"yyyy-MM-dd\") }}.\n  Start on the next business day (Monday if weekend) and end on the last business day needed.\n\n\nTICKET DETAILS\nIdea / Issue Description:{{ $('Fields Tickets').first().json['Idea / Issue Description'] }}\nProposed Solution:{{ $('Fields Tickets').first().json['Proposed Solution'] }}\n\nCURRENT DEVELOPERS\nDEVELOPER 1:\n⦁\tName:{{ $json['Desarrollador 1'].Nombre }}\n⦁\tIdentity:{{ $json['Desarrollador 1'].Identidad }}\n⦁\tProfessional Profile:{{ $json['Desarrollador 1'].Perfil }}\n⦁\tWork Experience:{{ $json['Desarrollador 1']['Experiencia Laboral'] }}\n⦁\tEducation:{{ $json['Desarrollador 1']['Educación'] }}\n⦁\tTechnical Skills:{{ $json['Desarrollador 1']['Habilidades Técnicas'] }}\n⦁\tLanguages:{{ $json['Desarrollador 1'].Idiomas }}\n\nDEVELOPER 2:\n⦁\tName:{{ $json['Desarrollador 2'].Nombre }}\n⦁\tIdentity:{{ $json['Desarrollador 2'].Identidad }}\n⦁\tProfessional Profile:{{ $json['Desarrollador 2'].Perfil }}\n⦁\tWork Experience:{{ $json['Desarrollador 2']['Experiencia Laboral'] }}\n⦁\tEducation:{{ $json['Desarrollador 2']['Educación'] }}\n⦁\tTechnical Skills:{{ $json['Desarrollador 2']['Habilidades Técnicas'] }}\n⦁\tLanguages:{{ $json['Desarrollador 2'].Idiomas }}\n\nDEVELOPER 3:\n⦁\tName:{{ $json['Desarrollador 3'].Nombre }}\n⦁\tIdentity:{{ $json['Desarrollador 3'].Identidad }}\n⦁\tProfessional Profile:{{ $json['Desarrollador 3'].Perfil }}\n⦁\tWork Experience:{{ $json['Desarrollador 3']['Experiencia Laboral'] }}\n⦁\tEducation:{{ $json['Desarrollador 3']['Educación'] }}\n⦁\tTechnical Skills:{{ $json['Desarrollador 3']['Habilidades Técnicas'] }}\n⦁\tLanguages:{{ $json['Desarrollador 3'].Idiomas }}\n\nDEVELOPER 4\n⦁\tName:{{ $json['Desarrollador 4'].Nombre }}\n⦁\tIdentity:{{ $json['Desarrollador 4'].Identidad }}\n⦁\tProfessional Profile:{{ $json['Desarrollador 4'].Perfil }}\n⦁\tWork Experience:{{ $json['Desarrollador 4']['Experiencia Laboral'] }}\n⦁\tEducation:{{ $json['Desarrollador 4']['Educación'] }}\n⦁\tTechnical Skills:{{ $json['Desarrollador 4']['Habilidades Técnicas'] }}\n⦁\tLanguages:{{ $json['Desarrollador 4'].Idiomas }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2704,
+        80
+      ],
+      "id": "c8dd3681-78ac-46be-8e58-2ad9a52109a8",
+      "name": "Prompt CV",
+      "credentials": {
+        "openAiApi": {
+          "id": "TowH1FVSxZXdFDUM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let raw = $json[\"message\"][\"content\"];\n\n// eliminar los bloques ```json y ```\nraw = raw.replace(/```json|```/g, \"\").trim();\n\n// convertir a objeto\nreturn [ { json: JSON.parse(raw) } ];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        80
+      ],
+      "id": "b13ffc7f-189a-454b-9d6a-1f72de8c19c3",
+      "name": "Code JS Format Developer"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "persona_perfil",
+          "mode": "list",
+          "cachedResultName": "persona_perfil"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "numero_identidad",
+              "value": "={{ $json.Identity }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3232,
+        80
+      ],
+      "id": "e297244e-ec0d-485a-871a-7ade3f1acce3",
+      "name": "Select Rows Persona_Perfil",
+      "credentials": {
+        "postgres": {
+          "id": "Z93Pmku0N5KIrhtR",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "db_Tickets",
+          "mode": "list",
+          "cachedResultName": "db_Tickets"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Insertar Ticket In DB').first().json.ID }}",
+            "Duracion_Proyecto": "={{ $('Code JS Format Developer').item.json.estimated_hours }}",
+            "Id_Developer": "={{ $json.id }}",
+            "Status": "In Progress",
+            "Completion_Date": "={{ \n  $('Code JS Format Developer').item.json.developer_name === \"Otros\"\n  ? $now.format(\"yyyy-MM-dd\")\n  : $('Code JS Format Developer').item.json.completion_date \n}}",
+            "Start_Date": "={{ $now.format(\"yyyy-MM-dd\") }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "Marca temporal",
+              "displayName": "Marca temporal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Primary Contact (Email)",
+              "displayName": "Primary Contact (Email)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Region Impacted",
+              "displayName": "Region Impacted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Impact Area",
+              "displayName": "Impact Area",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Technical Complexity",
+              "displayName": "Technical Complexity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Idea / Issue Description",
+              "displayName": "Idea / Issue Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Proposed Solution",
+              "displayName": "Proposed Solution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Id_Developer",
+              "displayName": "Id_Developer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duracion_Proyecto",
+              "displayName": "Duracion_Proyecto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Start_Date",
+              "displayName": "Start_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Completion_Date",
+              "displayName": "Completion_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3440,
+        80
+      ],
+      "id": "5e84fba5-7eb8-4a40-b57f-e26fb1192d5f",
+      "name": "Update Rows db_Tickets",
+      "credentials": {
+        "postgres": {
+          "id": "Z93Pmku0N5KIrhtR",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "project": {
+          "__rl": true,
+          "value": "10000",
+          "mode": "list",
+          "cachedResultName": "Proyecto N8n"
+        },
+        "issueType": {
+          "__rl": true,
+          "value": "10003",
+          "mode": "list",
+          "cachedResultName": "Tarea"
+        },
+        "summary": "={{ $('Fields Tickets').first().json.Subject }}",
+        "additionalFields": {
+          "assignee": {
+            "__rl": true,
+            "value": "={{ $('Select Rows Persona_Perfil').item.json.id_Jira }}",
+            "mode": "id"
+          },
+          "description": "=Idea:{{ $('Fields Tickets').first().json['Idea / Issue Description'] }} \nSolution: {{ $('Fields Tickets').first().json['Proposed Solution'] }}\nMore Information Please Contact with {{ $('Fields Tickets').first().json['Primary Contact'] }}",
+          "customFieldsUi": {
+            "customFieldsValues": [
+              {
+                "fieldId": {
+                  "__rl": true,
+                  "value": "customfield_10015",
+                  "mode": "list",
+                  "cachedResultName": "Start date"
+                },
+                "fieldValue": "={{ $now.format(\"yyyy-MM-dd\") }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [
+        3648,
+        80
+      ],
+      "id": "45d4af9e-f1da-437b-8327-474d06910cab",
+      "name": "Create Ticket in Jira",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "86afvuHwLXoPaA2Z",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "subject": "={{    $('Code JS Format Developer').item.json.developer_name === \"Otros\"   ? \"N8N: New Ticket in Jira (OTROS)\"   : \"N8N: New Ticket in Jira\"}}",
+        "message": "=The following ticket just arrived at Jira, please review it.\nLink: https://ecci-team-n8n.atlassian.net/browse/{{ $json.key }}",
+        "toList": [
+          "={{ \n  $('Code JS Format Developer').item.json.developer_name === \"Otros\"\n  ? \"Santiago.ramirezp@ecci.edu.co\"\n  : $('Select Rows Persona_Perfil').item.json.mail \n}}\n"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        3840,
+        80
+      ],
+      "id": "583a3d41-1d03-42b1-a3f8-9fb4502563c5",
+      "name": "Developer Notification",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "4talzliYihf5KW84",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1UU_q9RIN0nKefO3rquf0ewb9Z8YK4UHavbsohagzKyw",
+          "mode": "list",
+          "cachedResultName": "TICKETS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UU_q9RIN0nKefO3rquf0ewb9Z8YK4UHavbsohagzKyw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Respuestas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UU_q9RIN0nKefO3rquf0ewb9Z8YK4UHavbsohagzKyw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.ID }}",
+            "Val": "TRUE"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "Marca temporal",
+              "displayName": "Marca temporal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Primary Contact (Email)",
+              "displayName": "Primary Contact (Email)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Region Impacted",
+              "displayName": "Region Impacted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Impact Area",
+              "displayName": "Impact Area",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Technical Complexity",
+              "displayName": "Technical Complexity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Idea / Issue Description",
+              "displayName": "Idea / Issue Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Proposed Solution",
+              "displayName": "Proposed Solution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Val",
+              "displayName": "Val",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        352,
+        0
+      ],
+      "id": "7dfb9b45-5943-4dd9-948e-536cc40036db",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1HypfOc9CIN3QhXn",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9131f07f-20c3-4c21-a811-f97e2c5e46c2",
+              "leftValue": "={{ $json.Val }}.toString",
+              "rightValue": "NULL",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "6706c6cb-15ad-4312-819b-f695c0d8adc0",
+      "name": "Filter Only Val null"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "d8e1d391-d838-43aa-b8af-ca177556d46a",
+      "name": "Limit First Item"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Download CV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Tickets": {
+      "main": [
+        [
+          {
+            "node": "Filter Only Val null",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields Tickets": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check duplicate": {
+      "main": [
+        [
+          {
+            "node": "Condition Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Condition Duplicate": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Rejected Mail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insertar Ticket In DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertar Ticket In DB": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download CV": {
+      "main": [
+        [
+          {
+            "node": "Filter Only PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Only PDF": {
+      "main": [
+        [
+          {
+            "node": "HTTP POST Mistral",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP POST Mistral": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET MISTRAL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET MISTRAL": {
+      "main": [
+        [
+          {
+            "node": "HTTP OCR Mistral",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP OCR Mistral": {
+      "main": [
+        [
+          {
+            "node": "Code JS CV format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code JS CV format": {
+      "main": [
+        [
+          {
+            "node": "Prompt CV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt CV": {
+      "main": [
+        [
+          {
+            "node": "Code JS Format Developer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code JS Format Developer": {
+      "main": [
+        [
+          {
+            "node": "Select Rows Persona_Perfil",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Rows Persona_Perfil": {
+      "main": [
+        [
+          {
+            "node": "Update Rows db_Tickets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Rows db_Tickets": {
+      "main": [
+        [
+          {
+            "node": "Create Ticket in Jira",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Ticket in Jira": {
+      "main": [
+        [
+          {
+            "node": "Developer Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Check duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Only Val null": {
+      "main": [
+        [
+          {
+            "node": "Limit First Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit First Item": {
+      "main": [
+        [
+          {
+            "node": "Fields Tickets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "05a93227-19f0-4960-8395-8504420be254",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fc0e14c4b249e493fd02593a94d87f04d68b98daebb5213de5b85898605741dd"
+  },
+  "id": "bn7lStuJgfaluqkG",
+  "tags": []
+}
